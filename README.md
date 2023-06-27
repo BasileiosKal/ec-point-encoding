@@ -1,6 +1,6 @@
 # Elliptic Curves Point Compressed Encoding
 
-[Editors Draft](https://basileioskal.github.io/ec-point-encoding/draft-point-encoding.html)
+[Editors Draft](https://basileioskal.github.io/ec-point-serialization/draft-point-encoding.html)
 
 [PoC Implementation](https://github.com/BasileiosKal/rs-point-serialization)
 
