@@ -55,27 +55,9 @@ For pairing-based applications, there are often 2 distinct curves that are defin
 
 ### Coordinate Serialization
 
-Depending on the base field upon which a curve is defined, each coordinate can be represented either as a scalar `s`, or as a vector of scalars `s = (s_(m-1), ..., s_1, s_0)`. In the first case, the serialization of the coordinate will be the serialization of `s`. In the second case, the serialization of that coordinate will be the concatenation `I2OSP(s_(m-1)) || ... || I2OSP(s_0)`. We define the `to_octets` operation, that will return a coordinate's octet string representation,
+Depending on the base field upon which a curve is defined, each coordinate can be represented either as a scalar `s`, or as a vector of scalars `s = (s_(m-1), ..., s_1, s_0)`. In the first case, the serialization of the coordinate will be the serialization of, i.e., `I2OSP(s)`. In the second case, we use the serialization defined in [Section 2.5] in [@!I-D.irtf-cfrg-pairing-friendly-curves]. More specifically, the serialization of that coordinate will be the concatenation `I2OSP(s_0) || ... || I2OSP(s_(m-1))`.
 
-```
-res = to_octets(s)
-
-Inputs:
-
-- s: An element of either Fp or Fq
-
-Outputs:
-
-- res: octet string
-
-Procedure:
-
-1. if s in Fp:
-2.     return I2OSP(s)
-3. else:
-4.     (s_(m-1), ..., s_1, s_0) = s
-5.     return I2OSP(s_(m-1)) || ... || I2OSP(s_1) || I2OSP(s_0)
-```
+We define the `to_octets(s)` operation, that will return a coordinate's `s` octet representation as defined above.
 
 ### Coordinate Deserialization
 
