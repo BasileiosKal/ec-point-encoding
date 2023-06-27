@@ -1,1 +1,1 @@
-Compressed Point Encoding for Weierstrass Elliptic Curves
+# Compressed Point Encoding for Weierstrass Elliptic Curves
