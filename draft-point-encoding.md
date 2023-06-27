@@ -225,12 +225,11 @@ To deserialize the point do,
     - If `length(serialized) = ceil(log2(p)/8)` or `length(serialized) = 2 * ceil(log2(p)/8)`, then the curve of the point was `E`.
     - If `length(serialized) = ceil(log2(q)/8)` or `length(serialized) = 2 * ceil(log2(q)/8)`, hen the curve of the point was `E'`.
     - In any other case, ABORT decoding.
+2. If `I_bit` is set, then if `serialized` is comprised from all 0s, return the identity point of the curve determined in step 1. If `serialized` is not all 0s, ABORT.
 2. If `C_bit` is 0, meaning that compression is not used, divide `serialized` into 2 octet string `s_0` and `s_1` of equal length so that `serialized = s_0 || s_1`. Set `x = from_octets(s_0)` and `y = from_octets(s_1)`.
-    - If `I_bit` is 1, then if `x = 0`, return the Identity point of the curve determined in step 1. Otherwise, if `x != 0`, ABORT decoding.
-    - Else, set `P = (x, y)`. If `P` is a point of the curve determined in step 1, return `P`. Otherwise, ABORT decoding.
-3. If `C_bit` is 1, do the following,
+    - Set `P = (x, y)`. If `P` is a point of the curve determined in step 1, return `P`. Otherwise, ABORT decoding.
+4. If `C_bit` is 1, do the following,
     - Set `x = from_octets(serialized)`, where the `from_octets()` as defined in (#coordinate-deserialization).
-    - If `I_bit` is 1 and `x = 0`, return the Identity point of the curve defined in step 1. If `I_bit` is 1 and `x != 0`, ABORT decoding.
     - Solve the equation of the curve defined in step 1 to determine the `y` coordinate. If `y = 0` and `S_bit = 1` ABORT. Otherwise do the following,
         - If the curve determined in step 1 was `E`, then if `S_bit = sign_P_Fp(y)` return `P = (x, y)`. Otherwise, return `P = (x, -y)`.
         - If the curve determined in step 1 was `E'`, then if `S_bit = sign_P_Fq(y)` return `P = (x, y)`. Otherwise, return `P = (x, -y)`.

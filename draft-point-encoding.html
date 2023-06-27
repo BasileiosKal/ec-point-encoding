@@ -1385,28 +1385,26 @@ Procedure:
 </li>
           </ul>
 </li>
-        <li id="section-5-11.2">
-          <p id="section-5-11.2.1">If <code>C_bit</code> is 0, meaning that compression is not used, divide <code>serialized</code> into 2 octet string <code>s_0</code> and <code>s_1</code> of equal length so that <code>serialized = s_0 || s_1</code>. Set <code>x = from_octets(s_0)</code> and <code>y = from_octets(s_1)</code>.<a href="#section-5-11.2.1" class="pilcrow">¶</a></p>
-<ul class="compact">
-<li class="compact" id="section-5-11.2.2.1">If <code>I_bit</code> is 1, then if <code>x = 0</code>, return the Identity point of the curve determined in step 1. Otherwise, if <code>x != 0</code>, ABORT decoding.<a href="#section-5-11.2.2.1" class="pilcrow">¶</a>
+        <li id="section-5-11.2">If <code>I_bit</code> is set, then if <code>serialized</code> is comprised from all 0s, return the identity point of the curve determined in step 1. If <code>serialized</code> is not all 0s, ABORT.<a href="#section-5-11.2" class="pilcrow">¶</a>
 </li>
-            <li class="compact" id="section-5-11.2.2.2">Else, set <code>P = (x, y)</code>. If <code>P</code> is a point of the curve determined in step 1, return <code>P</code>. Otherwise, ABORT decoding.<a href="#section-5-11.2.2.2" class="pilcrow">¶</a>
+        <li id="section-5-11.3">
+          <p id="section-5-11.3.1">If <code>C_bit</code> is 0, meaning that compression is not used, divide <code>serialized</code> into 2 octet string <code>s_0</code> and <code>s_1</code> of equal length so that <code>serialized = s_0 || s_1</code>. Set <code>x = from_octets(s_0)</code> and <code>y = from_octets(s_1)</code>.<a href="#section-5-11.3.1" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5-11.3.2.1">Set <code>P = (x, y)</code>. If <code>P</code> is a point of the curve determined in step 1, return <code>P</code>. Otherwise, ABORT decoding.<a href="#section-5-11.3.2.1" class="pilcrow">¶</a>
 </li>
           </ul>
 </li>
-        <li id="section-5-11.3">
-          <p id="section-5-11.3.1">If <code>C_bit</code> is 1, do the following,<a href="#section-5-11.3.1" class="pilcrow">¶</a></p>
+        <li id="section-5-11.4">
+          <p id="section-5-11.4.1">If <code>C_bit</code> is 1, do the following,<a href="#section-5-11.4.1" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="section-5-11.3.2.1">Set <code>x = from_octets(serialized)</code>, where the <code>from_octets()</code> as defined in <a href="#coordinate-deserialization" class="auto internal xref">Section 2.2.2</a>.<a href="#section-5-11.3.2.1" class="pilcrow">¶</a>
+<li class="compact" id="section-5-11.4.2.1">Set <code>x = from_octets(serialized)</code>, where the <code>from_octets()</code> as defined in <a href="#coordinate-deserialization" class="auto internal xref">Section 2.2.2</a>.<a href="#section-5-11.4.2.1" class="pilcrow">¶</a>
 </li>
-            <li class="compact" id="section-5-11.3.2.2">If <code>I_bit</code> is 1 and <code>x = 0</code>, return the Identity point of the curve defined in step 1. If <code>I_bit</code> is 1 and <code>x != 0</code>, ABORT decoding.<a href="#section-5-11.3.2.2" class="pilcrow">¶</a>
-</li>
-            <li class="compact" id="section-5-11.3.2.3">
-              <p id="section-5-11.3.2.3.1">Solve the equation of the curve defined in step 1 to determine the <code>y</code> coordinate. If <code>y = 0</code> and <code>S_bit = 1</code> ABORT. Otherwise do the following,<a href="#section-5-11.3.2.3.1" class="pilcrow">¶</a></p>
+            <li class="compact" id="section-5-11.4.2.2">
+              <p id="section-5-11.4.2.2.1">Solve the equation of the curve defined in step 1 to determine the <code>y</code> coordinate. If <code>y = 0</code> and <code>S_bit = 1</code> ABORT. Otherwise do the following,<a href="#section-5-11.4.2.2.1" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="section-5-11.3.2.3.2.1">If the curve determined in step 1 was <code>E</code>, then if <code>S_bit = sign_P_Fp(y)</code> return <code>P = (x, y)</code>. Otherwise, return <code>P = (x, -y)</code>.<a href="#section-5-11.3.2.3.2.1" class="pilcrow">¶</a>
+<li class="compact" id="section-5-11.4.2.2.2.1">If the curve determined in step 1 was <code>E</code>, then if <code>S_bit = sign_P_Fp(y)</code> return <code>P = (x, y)</code>. Otherwise, return <code>P = (x, -y)</code>.<a href="#section-5-11.4.2.2.2.1" class="pilcrow">¶</a>
 </li>
-                <li class="compact" id="section-5-11.3.2.3.2.2">If the curve determined in step 1 was <code>E'</code>, then if <code>S_bit = sign_P_Fq(y)</code> return <code>P = (x, y)</code>. Otherwise, return <code>P = (x, -y)</code>.<a href="#section-5-11.3.2.3.2.2" class="pilcrow">¶</a>
+                <li class="compact" id="section-5-11.4.2.2.2.2">If the curve determined in step 1 was <code>E'</code>, then if <code>S_bit = sign_P_Fq(y)</code> return <code>P = (x, y)</code>. Otherwise, return <code>P = (x, -y)</code>.<a href="#section-5-11.4.2.2.2.2" class="pilcrow">¶</a>
 </li>
               </ul>
 </li>
